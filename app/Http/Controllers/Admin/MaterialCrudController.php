@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\MaterialRequest;
+use App\Models\Group;
+use App\Models\Material;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -75,17 +77,41 @@ class MaterialCrudController extends CrudController
 
         //CRUD::setFromDb(); // fields
 
+
+
         CRUD::addField(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
         CRUD::addField(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
         CRUD::addField(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
-        CRUD::addField(['name' => 'image', 'type' => 'image','label'=>'الصورة']);
+
+//        CRUD::addField([
+//            'label' => "Profile Image",
+//            'name' => "image",
+//            'type' => 'image',
+//            'crop' => true,
+//            'aspect_ratio' => 1, // omit or set to 0 to allow any aspect ratio
+//            // 'disk'      => 's3_bucket', // in case you need to show images from a different disk
+//            // 'prefix'    => 'uploads/images/profile_pictures/' // in case your db value is only the file name (no path), you can use this to prepend your path to the image src (in HTML), before it's shown to the user;
+//        ]);
+
         CRUD::addField(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
         CRUD::addField(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-        CRUD::addField(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
+
+
+        CRUD::addField(['name'=> 'group', 'label'=> "المجموعة", 'type'=> 'select',
+            'entity'=> 'group',Group::class => "App\Models\Group",
+            'attribute' => 'name',(function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),]);
+
         CRUD::addField(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
         CRUD::addField(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
-        CRUD::addField(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
-        CRUD::addField(['name' => 'not', 'not' => 'text','label'=>'ملاحظات']);
+        CRUD::addField(['name' => 'not', 'not' => 'text','label'=>'ملاحظات','value']);
+
+
+        $material = new Material;
+        $material->user_id = backpack_user();
+
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

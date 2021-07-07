@@ -29,6 +29,11 @@ class Material extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
