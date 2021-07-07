@@ -43,16 +43,16 @@ class MaterialCrudController extends CrudController
 
 
         CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
-        CRUD::addColumn(['description' => 'description', 'type' => 'text','label'=>'الوصف']);
-        CRUD::addColumn(['serial' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
-        CRUD::addColumn(['image' => 'image', 'type' => 'text','label'=>'الصورة']);
-        CRUD::addColumn(['cost_price' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
-        CRUD::addColumn(['selling_price' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-        CRUD::addColumn(['group' => 'group', 'type' => 'text','label'=>'المجموعة']);
-        CRUD::addColumn(['is_visible' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
-        CRUD::addColumn(['is_available' => 'is_available', 'type' => 'boolean','label'=>'متاح']);
-        CRUD::addColumn(['user' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف السلعة']);
-        CRUD::addColumn(['user' => 'not', 'not' => 'text','label'=>'ملاحظات']);
+        CRUD::addColumn(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
+        CRUD::addColumn(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
+        CRUD::addColumn(['name' => 'image', 'type' => 'image','label'=>'الصورة']);
+        CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
+        CRUD::addColumn(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
+        CRUD::addColumn(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
+        CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
+        CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
+        CRUD::addColumn(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف السلعة']);
+        CRUD::addColumn(['name' => 'not', 'not' => 'text','label'=>'ملاحظات']);
 
 
 
@@ -73,20 +73,19 @@ class MaterialCrudController extends CrudController
     {
         CRUD::setValidation(MaterialRequest::class);
 
-        CRUD::setFromDb(); // fields
+        //CRUD::setFromDb(); // fields
 
-//        CRUD::addField(['name' => 'الاسم', 'type' => 'text']);
-//        CRUD::addField(['description' => 'الوصف', 'type' => 'text']);
-//        CRUD::addField(['serial' => 'الرقم التسلسلي', 'type' => 'text']);
-//        CRUD::addField(['image' => 'الصورة', 'type' => 'text']);
-//        CRUD::addField(['cost_price' => 'سعر التكلفة', 'type' => 'number']);
-//        CRUD::addField(['selling_price' => 'سعر البيع', 'type' => 'number']);
-//        CRUD::addField(['group' => 'المجموعة', 'type' => 'text']);
-//        CRUD::addField(['is_visible' => 'مرئية', 'type' => 'boolean']);
-//        CRUD::addField(['is_available' => 'متاح', 'type' => 'boolean']);
-//        CRUD::addField(['user' => 'المسخدم الذي اضاف السلعة', 'type' => 'text']);
-//        CRUD::addField(['not' => 'ملاحظات', 'type' => 'text']);
-
+        CRUD::addField(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
+        CRUD::addField(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
+        CRUD::addField(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
+        CRUD::addField(['name' => 'image', 'type' => 'image','label'=>'الصورة']);
+        CRUD::addField(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
+        CRUD::addField(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
+        CRUD::addField(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
+        CRUD::addField(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
+        CRUD::addField(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
+        CRUD::addField(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف السلعة']);
+        CRUD::addField(['name' => 'not', 'not' => 'text','label'=>'ملاحظات']);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

@@ -15,6 +15,7 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('name')->unique()->nullable(false);
             $table->text('description')->nullable(false);
             $table->string('serial')->unique()->nullable(false);
@@ -24,8 +25,8 @@ class CreateMaterialsTable extends Migration
             $table->string('group');
             $table->boolean('is_visible');
             $table->boolean('is_available');
-            $table->string('user');
             $table->string('not');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });
