@@ -51,7 +51,7 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
-        CRUD::addColumn(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف السلعة']);
+        CRUD::addColumn(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
         CRUD::addColumn(['name' => 'not', 'not' => 'text','label'=>'ملاحظات']);
 
 
@@ -84,7 +84,7 @@ class MaterialCrudController extends CrudController
         CRUD::addField(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
         CRUD::addField(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
         CRUD::addField(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
-        CRUD::addField(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف السلعة']);
+        CRUD::addField(['name' => 'user', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
         CRUD::addField(['name' => 'not', 'not' => 'text','label'=>'ملاحظات']);
 
         /**
