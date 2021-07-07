@@ -15,11 +15,11 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->default(1);
             $table->string('name')->unique()->nullable(false);
             $table->text('description')->nullable(false);
             $table->string('serial')->unique()->nullable(false);
-            $table->string('image')->nullable(false);
+            $table->string('image')->nullable();
             $table->decimal('cost_price',10,2)->nullable(false);
             $table->decimal('selling_price',10,2)->nullable(false);
             $table->string('group');
