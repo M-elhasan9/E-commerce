@@ -22,11 +22,12 @@ class CreateMaterialsTable extends Migration
             $table->string('image')->nullable();
             $table->decimal('cost_price',10,2)->nullable(false);
             $table->decimal('selling_price',10,2)->nullable(false);
-            $table->string('group');
+            $table->unsignedBigInteger('group_id')->default(1);
             $table->boolean('is_visible');
             $table->boolean('is_available');
             $table->string('not');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });
