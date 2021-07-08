@@ -26,7 +26,8 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-             'group' => 'required|min:5|max:255'
+             'group' => 'required|max:255',
+             'name' => 'required|max:255'
         ];
     }
 

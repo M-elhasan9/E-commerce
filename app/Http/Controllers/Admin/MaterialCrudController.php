@@ -47,7 +47,19 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
         CRUD::addColumn(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
         CRUD::addColumn(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
-        CRUD::addColumn(['name' => 'image', 'type' => 'image','label'=>'الصورة']);
+
+        CRUD::addColumn([
+            'name' => 'image', // The db column name
+            'label' => "الصورة", // Table column heading
+            'type' => 'image',
+
+            // OPTIONALS
+            // 'prefix' => 'folder/subfolder/',
+            // image from a different disk (like s3 bucket)
+            // 'disk' => 'disk-name',
+
+        ]);
+
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
         CRUD::addColumn(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
@@ -83,19 +95,15 @@ class MaterialCrudController extends CrudController
         CRUD::addField(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
         CRUD::addField(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
 
-//        CRUD::addField([
-//            'label' => "Profile Image",
-//            'name' => "image",
-//            'type' => 'image',
-//            'crop' => true,
-//            'aspect_ratio' => 1, // omit or set to 0 to allow any aspect ratio
-//            // 'disk'      => 's3_bucket', // in case you need to show images from a different disk
-//            // 'prefix'    => 'uploads/images/profile_pictures/' // in case your db value is only the file name (no path), you can use this to prepend your path to the image src (in HTML), before it's shown to the user;
-//        ]);
+        CRUD::addField([
+            'name' => 'image',
+            'label' => 'الصورة',
+            'type' => 'upload',
+            'upload' => true
+        ]);
 
         CRUD::addField(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
         CRUD::addField(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-
 
         CRUD::addField(['name'=> 'group', 'label'=> "المجموعة", 'type'=> 'select',
             'entity'=> 'group',Group::class => "App\Models\Group",
