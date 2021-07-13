@@ -39,6 +39,11 @@ class Material extends Model
         return $this->belongsTo(Group::class);
     }
 
+    public function material()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
     /*
     |--------------------------------------------------------------------------

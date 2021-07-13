@@ -36,6 +36,7 @@ class MaterialCrudController extends CrudController
         CRUD::setModel(\App\Models\Material::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/material');
         CRUD::setEntityNameStrings('المادة', 'المواد');
+
     }
 
     /**
@@ -90,6 +91,8 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'not', 'type' => 'text','label'=>'ملاحظات']);
 
         $this->crud->addButtonFromView('line', 'show_hide_Material',"toggleVisibility");
+
+        $this->crud->addButtonFromView('line', 'is_available',"toggleAvailability");
 
 
         /**
@@ -185,12 +188,14 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'group', 'type' => 'select','label'=>'المجموعة']);
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
+
         CRUD::addColumn(['name' => 'user_id',
             'type' => 'text',
-            //'entity' => 'user',
+            'entity' => 'user',
             'attribute' => 'user',
             'model' => "App\Models\Material",
             'label'=>'المسخدم الذي اضاف المادة']);
+
         CRUD::addColumn(['name' => 'not', 'type' => 'text','label'=>'ملاحظات']);
 
     }
@@ -200,9 +205,28 @@ public function materialToggleVisibility($materialId)
     $material=Material::query()->findOrFail($materialId);
     $material->is_visible=!$material->is_visible;
     $material->save();
-    Alert::success($material->is_visible ? 'تم إظهار المادة' : 'تم إخفاء المادة')->flash();
+    if($material->is_visible){
+        Alert::success('تم إظهار المادة')->flash();
+    }else{
+        Alert::error( 'تم  إخفاء المادة')->flash();
+    }
+    //Alert::success($material->is_visible ? 'تم إظهار المادة' : 'تم إخفاء المادة')->flash();
     return back();
 }
 
+    public function materialToggleAvailability($materialId)
+    {
+        $material=Material::query()->findOrFail($materialId);
+        $material->is_available=!$material->is_available;
+        $material->save();
+
+        if($material->is_available){
+            Alert::success('تم إتاحة المادة')->flash();
+        }else{
+            Alert::error( 'تم إلغاء إتاحة المادة')->flash();
+        }
+        //Alert::success($material->is_available ? 'تم إتاحة المادة' : 'تم إلغاء إتاحة المادة')->flash();
+        return back();
+    }
 
 }

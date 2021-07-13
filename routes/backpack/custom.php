@@ -18,6 +18,7 @@ Route::group([
 ], function () { // custom admin routes
     Route::crud('group', 'GroupCrudController');
 
-    Route::get("materialToggleVisibility\{materialId}",'MaterialCrudController@materialToggleVisibility');
+    Route::get("materialToggleVisibility/{materialId}",'MaterialCrudController@materialToggleVisibility');
+    Route::get("materialToggleAvailability/{materialId}",'MaterialCrudController@materialToggleAvailability');
     Route::crud('material', 'MaterialCrudController');
 }); // this should be the absolute last line of this file

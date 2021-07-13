@@ -1,4 +1,4 @@
-    <a href="{{ backpack_url('materialToggleVisibility/'.$entry->getKey()) }}" class="btn btn-sm btn-danger ">
+    <a href="{{ backpack_url('materialToggleVisibility/'.$entry->getKey()) }}" class="btn btn-sm btn-primary ">
         @if($entry->is_visible)
             <i class="fa fa-times" aria-hidden="true"></i>
             إخفاء
