@@ -8,6 +8,8 @@ use App\Models\Material;
 use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Image;
+use Prologue\Alerts\Facades\Alert;
 
 
 /**
@@ -34,6 +36,7 @@ class MaterialCrudController extends CrudController
         CRUD::setModel(\App\Models\Material::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/material');
         CRUD::setEntityNameStrings('المادة', 'المواد');
+
     }
 
     /**
@@ -81,11 +84,15 @@ class MaterialCrudController extends CrudController
 
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-        CRUD::addColumn(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
+        CRUD::addColumn(['name' => 'group', 'type' => 'select','label'=>'المجموعة']);
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
         CRUD::addColumn(['name' => 'user_id', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
         CRUD::addColumn(['name' => 'not', 'type' => 'text','label'=>'ملاحظات']);
+
+        $this->crud->addButtonFromView('line', 'show_hide_Material',"toggleVisibility");
+
+        $this->crud->addButtonFromView('line', 'is_available',"toggleAvailability");
 
 
         /**
@@ -111,7 +118,13 @@ class MaterialCrudController extends CrudController
         CRUD::addField(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
         CRUD::addField(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
 
-        CRUD::addField(['name' => 'image', 'label' => 'الصورة', 'type' => 'upload', 'upload' => true]);
+        CRUD::addField([
+            'name'      => 'image',
+            'label'     => 'الصورة',
+            'type'      => 'upload',
+            'upload'    => true,
+            'disk'      => 'uploads',
+        ]);
 
         CRUD::addField(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
         CRUD::addField(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
@@ -127,9 +140,10 @@ class MaterialCrudController extends CrudController
         CRUD::addField(['name' => 'not', 'type' => 'text','label'=>'ملاحظات','value']);
 
 
+
+
         $material = new Material;
         $material->user_id = backpack_user();
-
 
 
         /**
@@ -166,20 +180,48 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'image', // The db column name
             'label' => "الصورة", // Table column heading
-            'type' => 'image',
+            'type' => 'upload',
         ]);
 
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-        CRUD::addColumn(['name' => 'group', 'type' => 'text','label'=>'المجموعة']);
+        CRUD::addColumn(['name' => 'group', 'type' => 'select','label'=>'المجموعة']);
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
+
         CRUD::addColumn(['name' => 'user_id', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
+
         CRUD::addColumn(['name' => 'not', 'type' => 'text','label'=>'ملاحظات']);
 
     }
 
+public function materialToggleVisibility($materialId)
+{
+    $material=Material::query()->findOrFail($materialId);
+    $material->is_visible=!$material->is_visible;
+    $material->save();
+    if($material->is_visible){
+        Alert::success('تم إظهار المادة')->flash();
+    }else{
+        Alert::error( 'تم  إخفاء المادة')->flash();
+    }
+    //Alert::success($material->is_visible ? 'تم إظهار المادة' : 'تم إخفاء المادة')->flash();
+    return back();
+}
 
+    public function materialToggleAvailability($materialId)
+    {
+        $material=Material::query()->findOrFail($materialId);
+        $material->is_available=!$material->is_available;
+        $material->save();
 
+        if($material->is_available){
+            Alert::success('تم إتاحة المادة')->flash();
+        }else{
+            Alert::error( 'تم إلغاء إتاحة المادة')->flash();
+        }
+        //Alert::success($material->is_available ? 'تم إتاحة المادة' : 'تم إلغاء إتاحة المادة')->flash();
+        return back();
+    }
 
 }
