@@ -23,8 +23,6 @@ Route::group([
     Route::get("materialToggleAvailability/{materialId}",'MaterialCrudController@materialToggleAvailability');
     Route::crud('material', 'MaterialCrudController');
 
-    Route::prefix('api')->group(function () {
-        Route::apiResource('materials', 'API\ApiController');
-    });
+
 
 }); // this should be the absolute last line of this file

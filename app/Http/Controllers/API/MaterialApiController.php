@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Material;
 use Illuminate\Http\Request;
 
-class ApiController extends Controller
+class MaterialApiController extends Controller
 {
     /**
      * Display a listing of the resource.

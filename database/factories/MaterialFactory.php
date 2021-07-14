@@ -30,8 +30,8 @@ class MaterialFactory extends Factory
             'cost_price'=>rand(50,100),
             'selling_price'=>rand(100,150),
             'group_id'=>1,
-            'is_visible'=>$this->faker->numberBetween(0,1),
-            'is_available'=>$this->faker->numberBetween(0,1),
+            'is_visible'=>$this->faker->boolean,
+            'is_available'=>$this->faker->boolean,
             'not'=>$this->faker->text,
         ];
     }
