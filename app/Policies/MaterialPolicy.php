@@ -18,7 +18,7 @@ class MaterialPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+       // return $user->isSuperAdmin();
     }
 
     /**
