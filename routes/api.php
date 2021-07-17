@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('material', \App\Http\Controllers\API\MaterialApiController::class)->except([
     'create', 'store', 'update', 'destroy'
-]);//->middleware('admin');
+])->middleware('admin');
 
