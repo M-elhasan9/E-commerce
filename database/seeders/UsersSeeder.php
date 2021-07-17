@@ -22,31 +22,10 @@ class UsersSeeder extends Seeder
             'email' => "admin@gmail.com",
             'phone' => "05531777777",
             'is_admin' => 1,
+            'is_active' => 1,
             'password' => Hash::make('12345678')
         ]);
-        DB::table('users')->insert([
-            'id' => 2,
-            'name' => "admin2",
-            'email' => "admin2@gmail.com",
-            'phone' => "05531777777",
-            'is_admin' => 1,
-            'password' => Hash::make('12345678')
-        ]);
-        DB::table('users')->insert([
-            'id' => 3,
-            'name' => "user",
-            'email' => "user@gmail.com",
-            'phone' => "05531777777",
-            'is_admin' => 0,
-            'password' => Hash::make('12345678')
-        ]);
-        DB::table('users')->insert([
-            'id' => 4,
-            'name' => "user2",
-            'email' => "user2@gmail.com",
-            'phone' => "05531777777",
-            'is_admin' => 0,
-            'password' => Hash::make('12345678')
-        ]);
+
+
     }
 }

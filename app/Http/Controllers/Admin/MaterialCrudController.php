@@ -48,8 +48,10 @@ class MaterialCrudController extends CrudController
     protected function setupListOperation()
     {
 
-        
+
         //CRUD::setFromDb(); // columns
+
+
 
         $this->crud->addFilter([
             'type'  => 'simple',
@@ -168,10 +170,7 @@ class MaterialCrudController extends CrudController
     protected function setupShowOperation()
     {
 
-//        $user = Auth::user();
-//        if (!$user->can('view')) {
-//            abort(403);
-//        }
+
 
         CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
         CRUD::addColumn(['name' => 'description', 'type' => 'text','label'=>'الوصف']);

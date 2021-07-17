@@ -16,9 +16,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersSeeder::class);
 
+        \App\Models\User::factory(10)->create();
+
         \App\Models\Group::factory(10)->create();
 
         \App\Models\Material::factory(10)->create();
+
 
 
     }

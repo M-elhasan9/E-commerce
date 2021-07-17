@@ -30,7 +30,7 @@ class MaterialPolicy
      */
     public function view(User $user, Material $material)
     {
-        return $user->id === $material->user_id;
+        return $user->id == $material->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class MaterialPolicy
      */
     public function delete(User $user, Material $material)
     {
-        return $user->id === $material->user_id;
+        return $user->id == $material->user_id;
     }
 
     /**
