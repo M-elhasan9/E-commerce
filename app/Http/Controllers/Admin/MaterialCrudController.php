@@ -48,7 +48,7 @@ class MaterialCrudController extends CrudController
     protected function setupListOperation()
     {
 
-
+        
         //CRUD::setFromDb(); // columns
 
         $this->crud->addFilter([
@@ -180,7 +180,7 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn([
             'name' => 'image', // The db column name
             'label' => "الصورة", // Table column heading
-            'type' => 'upload',
+            'type' => 'image',
         ]);
 
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
@@ -223,5 +223,6 @@ public function materialToggleVisibility($materialId)
         //Alert::success($material->is_available ? 'تم إتاحة المادة' : 'تم إلغاء إتاحة المادة')->flash();
         return back();
     }
+
 
 }
