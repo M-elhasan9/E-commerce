@@ -3,10 +3,11 @@
 namespace Tests\Feature;
 
 use App\Models\Material;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class MaterialTest extends TestCase
 {
     /**
      * A basic test example.
@@ -29,5 +30,18 @@ class ExampleTest extends TestCase
         $response->assertDontSee($invisibleMaterial->description);
         $response->assertDontSee($unavailableMaterial->description);
         $response->assertStatus(200);
+    }
+
+    public function test_policy()
+    {
+        $unavailableMaterial=Material::factory()->create(['is_visible'=>true,'description'=>uniqid(),'is_available'=>false,'name'=>uniqid()]);
+        $availableMaterial=Material::factory()->create(['is_visible'=>true,'description'=>uniqid(),'is_available'=>true,'name'=>uniqid()]);
+        $user = User::factory()->create();
+
+        self::assertTrue($user->can("viewAny",Material::class));
+        self::assertTrue($user->can("update",$unavailableMaterial));
+        $response = $this->get('api/material?limit=1000&offset=0');
+
+
     }
 }

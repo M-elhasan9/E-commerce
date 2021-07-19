@@ -20,6 +20,15 @@ class MaterialPolicy
     {
        // return $user->isSuperAdmin();
     }
+    public function materialToggleVisibility(User $user,Material $material)
+    {
+        return true;
+
+    }
+    public function materialToggleAvailability(User $user,Material $material)
+    {
+        return $user->id == $material->user_id;
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -30,7 +39,7 @@ class MaterialPolicy
      */
     public function view(User $user, Material $material)
     {
-        return $user->id == $material->user_id;
+        return $user->is_admin;
     }
 
     /**

@@ -17,7 +17,6 @@ use Prologue\Alerts\Facades\Alert;
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-
 class MaterialCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
@@ -47,36 +46,37 @@ class MaterialCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
+        if (!backpack_user()->is_admin) {
+            $this->crud->addClause('where','materials.user_id','=',backpack_user()->id);
+        }
 
         //CRUD::setFromDb(); // columns
 
 
-
         $this->crud->addFilter([
-            'type'  => 'simple',
-            'name'  => 'is_visible',
+            'type' => 'simple',
+            'name' => 'is_visible',
             'label' => 'عرض العناصر المرئية'
         ],
             false,
-            function() {
+            function () {
                 $this->crud->addClause('where', 'is_visible', '1');
             });
 
         $this->crud->addFilter([
-            'type'  => 'simple',
-            'name'  => 'is_available',
+            'type' => 'simple',
+            'name' => 'is_available',
             'label' => 'عرض العناصر المتاحة'
         ],
             false,
-            function() {
+            function () {
                 $this->crud->addClause('where', 'is_available', '1');
             });
 
 
-        CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
-        CRUD::addColumn(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
-        CRUD::addColumn(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
+        CRUD::addColumn(['name' => 'name', 'type' => 'text', 'label' => 'الاسم']);
+        CRUD::addColumn(['name' => 'description', 'type' => 'text', 'label' => 'الوصف']);
+        CRUD::addColumn(['name' => 'serial', 'type' => 'text', 'label' => 'الرقم التسلسلي']);
 
         CRUD::addColumn([
             'name' => 'image', // The db column name
@@ -84,17 +84,14 @@ class MaterialCrudController extends CrudController
             'type' => 'image',
         ]);
 
-        CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
-        CRUD::addColumn(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-        CRUD::addColumn(['name' => 'group', 'type' => 'select','label'=>'المجموعة']);
-        CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
-        CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
-        CRUD::addColumn(['name' => 'user_id', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
-        CRUD::addColumn(['name' => 'not', 'type' => 'text','label'=>'ملاحظات']);
+        CRUD::addColumn(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
+        CRUD::addColumn(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
+        CRUD::addColumn(['name' => 'group', 'type' => 'select', 'label' => 'المجموعة']);
+        CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
+        CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
+        CRUD::addColumn(['name' => 'user_id', 'type' => 'text', 'label' => 'المسخدم الذي اضاف المادة']);
+        CRUD::addColumn(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات']);
 
-        $this->crud->addButtonFromView('line', 'show_hide_Material',"toggleVisibility");
-
-        $this->crud->addButtonFromView('line', 'is_available',"toggleAvailability");
 
 
         /**
@@ -116,32 +113,30 @@ class MaterialCrudController extends CrudController
 
         //CRUD::setFromDb(); // fields
 
-        CRUD::addField(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
-        CRUD::addField(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
-        CRUD::addField(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
+        CRUD::addField(['name' => 'name', 'type' => 'text', 'label' => 'الاسم']);
+        CRUD::addField(['name' => 'description', 'type' => 'text', 'label' => 'الوصف']);
+        CRUD::addField(['name' => 'serial', 'type' => 'text', 'label' => 'الرقم التسلسلي']);
 
         CRUD::addField([
-            'name'      => 'image',
-            'label'     => 'الصورة',
-            'type'      => 'upload',
-            'upload'    => true,
-            'disk'      => 'uploads',
+            'name' => 'image',
+            'label' => 'الصورة',
+            'type' => 'upload',
+            'upload' => true,
+            'disk' => 'uploads',
         ]);
 
-        CRUD::addField(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
-        CRUD::addField(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
+        CRUD::addField(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
+        CRUD::addField(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
 
-        CRUD::addField(['name'=> 'group', 'label'=> "المجموعة", 'type'=> 'select',
-            'entity'=> 'group',Group::class => "App\Models\Group",
-            'attribute' => 'name',(function ($query) {
+        CRUD::addField(['name' => 'group', 'label' => "المجموعة", 'type' => 'select',
+            'entity' => 'group', Group::class => "App\Models\Group",
+            'attribute' => 'name', (function ($query) {
                 return $query->orderBy('name', 'ASC')->get();
             }),]);
 
-        CRUD::addField(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
-        CRUD::addField(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
-        CRUD::addField(['name' => 'not', 'type' => 'text','label'=>'ملاحظات','value']);
-
-
+        CRUD::addField(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
+        CRUD::addField(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
+        CRUD::addField(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات', 'value']);
 
 
         $material = new Material;
@@ -169,12 +164,15 @@ class MaterialCrudController extends CrudController
 
     protected function setupShowOperation()
     {
+//        $user = backpack_user();
+//        if ($user->cannot("view", $this->crud->getCurrentEntry())) {
+//            abort(403, "you do not have  the permission to do this!");
+//        }
 
 
-
-        CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
-        CRUD::addColumn(['name' => 'description', 'type' => 'text','label'=>'الوصف']);
-        CRUD::addColumn(['name' => 'serial', 'type' => 'text','label'=>'الرقم التسلسلي']);
+        CRUD::addColumn(['name' => 'name', 'type' => 'text', 'label' => 'الاسم']);
+        CRUD::addColumn(['name' => 'description', 'type' => 'text', 'label' => 'الوصف']);
+        CRUD::addColumn(['name' => 'serial', 'type' => 'text', 'label' => 'الرقم التسلسلي']);
 
         CRUD::addColumn([
             'name' => 'image', // The db column name
@@ -182,42 +180,65 @@ class MaterialCrudController extends CrudController
             'type' => 'image',
         ]);
 
-        CRUD::addColumn(['name' => 'cost_price', 'type' => 'number','label'=>'سعر التكلفة']);
-        CRUD::addColumn(['name' => 'selling_price', 'type' => 'number','label'=>'سعر البيع']);
-        CRUD::addColumn(['name' => 'group', 'type' => 'select','label'=>'المجموعة']);
-        CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean','label'=>'مرئية']);
-        CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean','label'=>'متاحة']);
+        CRUD::addColumn(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
+        CRUD::addColumn(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
+        CRUD::addColumn(['name' => 'group', 'type' => 'select', 'label' => 'المجموعة']);
+        CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
+        CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
 
-        CRUD::addColumn(['name' => 'user_id', 'type' => 'text','label'=>'المسخدم الذي اضاف المادة']);
+        CRUD::addColumn(['name' => 'user_id', 'type' => 'text', 'label' => 'المسخدم الذي اضاف المادة']);
 
-        CRUD::addColumn(['name' => 'not', 'type' => 'text','label'=>'ملاحظات']);
+        CRUD::addColumn(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات']);
+
+
+        $user = backpack_user();
+        if ($user->is_admin) {
+            $this->crud->addButtonFromView('line', 'show_hide_Material', "toggleVisibility");
+        }
+
+        if($this->crud->addClause('where','materials.user_id','=',backpack_user()->id)){
+            $this->crud->addButtonFromView('line', 'is_available', "toggleAvailability");
+        }
+
+
 
     }
 
-public function materialToggleVisibility($materialId)
-{
-    $material=Material::query()->findOrFail($materialId);
-    $material->is_visible=!$material->is_visible;
-    $material->save();
-    if($material->is_visible){
-        Alert::success('تم إظهار المادة')->flash();
-    }else{
-        Alert::error( 'تم  إخفاء المادة')->flash();
+    public function materialToggleVisibility($materialId)
+    {
+        $user = backpack_user();
+        if (!$user->is_admin) {
+            abort(403, "you do not have  the permission to do this!");
+        }
+
+        $material = Material::query()->findOrFail($materialId);
+        $material->is_visible = !$material->is_visible;
+        $material->save();
+        if ($material->is_visible) {
+            Alert::success('تم إظهار المادة')->flash();
+        } else {
+            Alert::error('تم  إخفاء المادة')->flash();
+        }
+        //Alert::success($material->is_visible ? 'تم إظهار المادة' : 'تم إخفاء المادة')->flash();
+        return back();
     }
-    //Alert::success($material->is_visible ? 'تم إظهار المادة' : 'تم إخفاء المادة')->flash();
-    return back();
-}
 
     public function materialToggleAvailability($materialId)
     {
-        $material=Material::query()->findOrFail($materialId);
-        $material->is_available=!$material->is_available;
+        $user = backpack_user();
+        if ($user->cannot("materialToggleAvailability", $this->crud->getCurrentEntry())) {
+            abort(403, "you do not have  the permission to do this!");
+        }
+
+
+        $material = Material::query()->findOrFail($materialId);
+        $material->is_available = !$material->is_available;
         $material->save();
 
-        if($material->is_available){
+        if ($material->is_available) {
             Alert::success('تم إتاحة المادة')->flash();
-        }else{
-            Alert::error( 'تم إلغاء إتاحة المادة')->flash();
+        } else {
+            Alert::error('تم إلغاء إتاحة المادة')->flash();
         }
         //Alert::success($material->is_available ? 'تم إتاحة المادة' : 'تم إلغاء إتاحة المادة')->flash();
         return back();
