@@ -22,7 +22,7 @@ class MaterialPolicy
     }
     public function materialToggleVisibility(User $user,Material $material)
     {
-        return true;
+        return $user->is_admin;
 
     }
     public function materialToggleAvailability(User $user,Material $material)
@@ -39,7 +39,8 @@ class MaterialPolicy
      */
     public function view(User $user, Material $material)
     {
-        return $user->is_admin;
+        return ($user->is_admin || $user->id == $material->user_id);
+
     }
 
     /**

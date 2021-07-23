@@ -164,10 +164,10 @@ class MaterialCrudController extends CrudController
 
     protected function setupShowOperation()
     {
-//        $user = backpack_user();
-//        if ($user->cannot("view", $this->crud->getCurrentEntry())) {
-//            abort(403, "you do not have  the permission to do this!");
-//        }
+        $user = backpack_user();
+        if ($user->cannot("view", $this->crud->getCurrentEntry())) {
+            abort(403, "you do not have  the permission to do this!");
+        }
 
 
         CRUD::addColumn(['name' => 'name', 'type' => 'text', 'label' => 'الاسم']);
@@ -191,23 +191,20 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات']);
 
 
-        $user = backpack_user();
         if ($user->is_admin) {
             $this->crud->addButtonFromView('line', 'show_hide_Material', "toggleVisibility");
         }
 
-        if($this->crud->addClause('where','materials.user_id','=',backpack_user()->id)){
+        if ($user->can("materialToggleAvailability", $this->crud->getCurrentEntry())) {
             $this->crud->addButtonFromView('line', 'is_available', "toggleAvailability");
         }
-
-
 
     }
 
     public function materialToggleVisibility($materialId)
     {
         $user = backpack_user();
-        if (!$user->is_admin) {
+        if ($user->cannot("materialToggleVisibility", $this->crud->getCurrentEntry())) {
             abort(403, "you do not have  the permission to do this!");
         }
 
