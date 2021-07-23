@@ -109,6 +109,11 @@ class MaterialCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        $user = backpack_user();
+        if ($user->is_admin) {
+            abort(403, "you do not have  the permission to do this!");
+        }
+
         CRUD::setValidation(MaterialRequest::class);
 
         //CRUD::setFromDb(); // fields
@@ -120,9 +125,7 @@ class MaterialCrudController extends CrudController
         CRUD::addField([
             'name' => 'image',
             'label' => 'الصورة',
-            'type' => 'upload',
-            'upload' => true,
-            'disk' => 'uploads',
+            'type' => 'image',
         ]);
 
         CRUD::addField(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
@@ -134,9 +137,9 @@ class MaterialCrudController extends CrudController
                 return $query->orderBy('name', 'ASC')->get();
             }),]);
 
-        CRUD::addField(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
-        CRUD::addField(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
         CRUD::addField(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات', 'value']);
+
+
 
 
         $material = new Material;

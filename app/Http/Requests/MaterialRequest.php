@@ -26,8 +26,15 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-             'group' => 'required|max:255',
-             'name' => 'required|max:255'
+
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'serial' => 'required|max:255',
+            'cost_price' => 'required',
+            'selling_price' => 'required',
+            'group' => 'required|max:255',
+            'not' => 'required',
+            // validate for pricing
         ];
     }
 
