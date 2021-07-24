@@ -75,11 +75,13 @@ class Material extends Model
 
     public function setImageAttribute($value)
     {
+        $user = backpack_user();
+
         $attribute_name = "image";
         // or use your own disk, defined in config/filesystems.php
         $disk = config('backpack.base.root_disk_name');
         // destination path relative to the disk above
-        $destination_path = "public/uploads/folder_1/folder_2";
+        $destination_path = "public/uploads/" . $user->id;
 
         // if the image was erased
         if ($value==null) {
@@ -113,4 +115,12 @@ class Material extends Model
             $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
         }
     }
+    //TODO:Deleting does not work
+//    public static function boot()
+//    {
+//        parent::boot();
+//        static::deleting(function($obj) {
+//            \Storage::disk(config('backpack.base.root_disk_name'))->delete($obj->image);
+//        });
+//    }
 }

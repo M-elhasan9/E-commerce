@@ -34,7 +34,13 @@ class MaterialCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\Material::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/material');
-        CRUD::setEntityNameStrings('المادة', 'المواد');
+        CRUD::setEntityNameStrings('مادة', 'المواد');
+
+        if (backpack_user()->is_admin) {
+            $this->crud->denyAccess('delete');
+            $this->crud->denyAccess('update');
+            $this->crud->denyAccess('create');
+        }
 
     }
 
@@ -46,10 +52,10 @@ class MaterialCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        if (!backpack_user()->is_admin) {
-            $this->crud->addClause('where','materials.user_id','=',backpack_user()->id);
-        }
 
+        if (!backpack_user()->is_admin) {
+            $this->crud->addClause('where', 'materials.user_id', '=', backpack_user()->id);
+        }
         //CRUD::setFromDb(); // columns
 
 
@@ -91,7 +97,6 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
         CRUD::addColumn(['name' => 'user_id', 'type' => 'text', 'label' => 'المسخدم الذي اضاف المادة']);
         CRUD::addColumn(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات']);
-
 
 
         /**
@@ -140,8 +145,6 @@ class MaterialCrudController extends CrudController
         CRUD::addField(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات', 'value']);
 
 
-
-
         $material = new Material;
         $material->user_id = backpack_user();
 
@@ -162,6 +165,15 @@ class MaterialCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupDeleteOperation()
+    {
+        $user = backpack_user();
+        if ($user->cannot("delete", $this->crud->getCurrentEntry())) {
+            abort(403, "you do not have  the permission to do this!");
+        }
+        $this->setupDeleteDefaults();
     }
 
 
