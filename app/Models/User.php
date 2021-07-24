@@ -13,8 +13,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
     use HasFactory;
-    use CrudTrait; // <----- this
-    use HasRoles; // <------ and this
+    use CrudTrait;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MaterialApiController extends Controller
 {
@@ -15,30 +16,14 @@ class MaterialApiController extends Controller
      */
     public function index()
     {
-        $materials = Material::all()->where('is_available','=','1')->where('is_visible','=',1);
+        $materials = DB::table('materials')
+            ->where('is_available','=',true)
+            ->where('is_visible','=',true)
+            ->offset(0)->limit(10)->get();
+
         return $materials;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -48,7 +33,10 @@ class MaterialApiController extends Controller
      */
     public function show(Material $material)
     {
-        //
+        $data = DB::table('materials')->where('id','=',$material['id'])->get();
+
+        return $data;
+
     }
 
     /**
@@ -62,26 +50,6 @@ class MaterialApiController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Material  $material
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Material $material)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Material  $material
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Material $material)
-    {
-        //
-    }
+
 }
