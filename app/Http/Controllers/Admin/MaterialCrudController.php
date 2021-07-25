@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\MaterialRequest;
+use App\Models\Category;
 use App\Models\Group;
 use App\Models\Material;
 use App\Models\User;
@@ -142,6 +143,13 @@ class MaterialCrudController extends CrudController
                 return $query->orderBy('name', 'ASC')->get();
             }),]);
 
+
+        CRUD::addField(['name' => 'category', 'label' => "الفئة", 'type' => 'select2_multiple',
+            'entity' => 'categories', Category::class => "App\Models\Category",
+            'attribute' => 'title', (function ($query) {
+                return $query->orderBy('title', 'ASC')->get();
+            }),]);
+
         CRUD::addField(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات', 'value']);
 
 
@@ -198,6 +206,9 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
         CRUD::addColumn(['name' => 'group', 'type' => 'select', 'label' => 'المجموعة']);
+
+        //CRUD::addColumn(['name' => 'category', 'type' => 'select2_multiple', 'label' => 'الفئة']);
+
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
 

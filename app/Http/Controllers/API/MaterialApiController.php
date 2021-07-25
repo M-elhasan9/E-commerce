@@ -24,6 +24,14 @@ class MaterialApiController extends Controller
         return $materials;
     }
 
+    public function getCategory($categoryId){
+        $materials = DB::table('material_category')
+            ->where('category_id','=',$categoryId)
+            ->offset(0)->limit(10)->get('material_id');
+
+        return $materials;
+    }
+
 
     /**
      * Display the specified resource.

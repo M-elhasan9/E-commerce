@@ -1,6 +1,7 @@
 <!-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 -->
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('group') }}'><i class="la la-group nav-icon"></i> Groups</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon la la-th-large'></i> Categories</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('material') }}'><i class=" nav-icon las la-database"></i> Materials</a></li>
 
 <li class="nav-item nav-dropdown">
@@ -11,3 +12,4 @@
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i class="nav-icon la la-key"></i> <span>Permissions</span></a></li>
     </ul>
 </li>
+
