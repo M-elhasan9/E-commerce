@@ -47,6 +47,11 @@ class Material extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class,'material_category','material_id','category_id','id','id');
+    }
+
 
     /*
     |--------------------------------------------------------------------------
