@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MaterialRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,15 +26,7 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'serial' => 'required|max:255',
-            'cost_price' => 'required|numeric',
-            'selling_price' => 'required|numeric|gt:cost_price',
-            'group' => 'required',
-            'not' => 'required',
-            // validate for pricing
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 

@@ -18,7 +18,16 @@ class MaterialPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+       // return $user->isSuperAdmin();
+    }
+    public function materialToggleVisibility(User $user,Material $material)
+    {
+        return $user->is_admin;
+
+    }
+    public function materialToggleAvailability(User $user,Material $material)
+    {
+        return $user->id == $material->user_id;
     }
 
     /**
@@ -30,7 +39,8 @@ class MaterialPolicy
      */
     public function view(User $user, Material $material)
     {
-        return $user->id === $material->user_id;
+        return ($user->is_admin || $user->id == $material->user_id);
+
     }
 
     /**
@@ -41,7 +51,7 @@ class MaterialPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -65,7 +75,7 @@ class MaterialPolicy
      */
     public function delete(User $user, Material $material)
     {
-        return $user->id === $material->user_id;
+        return $user->id == $material->user_id;
     }
 
     /**

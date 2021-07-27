@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\API\MaterialApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//TODO:middleware
+Route::get('getCategory/{categoryId}',[\App\Http\Controllers\API\MaterialApiController::class,'getCategory']);
+
+Route::apiResource('material', \App\Http\Controllers\API\MaterialApiController::class)->except([
+    'create', 'store', 'update', 'destroy'
+]);
+

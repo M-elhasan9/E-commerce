@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Category extends Model
 {
     use CrudTrait;
     use HasFactory;
@@ -17,7 +17,7 @@ class Group extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'groups';
+    protected $table = 'categories';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -36,6 +36,10 @@ class Group extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    protected function materials()
+    {
+        return $this->belongsToMany(Material::class,'material_category','category_id','material_id','id','id');
+    }
 
     /*
     |--------------------------------------------------------------------------

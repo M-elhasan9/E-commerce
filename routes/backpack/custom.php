@@ -8,6 +8,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => array_merge(
@@ -21,4 +22,9 @@ Route::group([
     Route::get("materialToggleVisibility/{materialId}",'MaterialCrudController@materialToggleVisibility');
     Route::get("materialToggleAvailability/{materialId}",'MaterialCrudController@materialToggleAvailability');
     Route::crud('material', 'MaterialCrudController');
+
+
+
+
+    Route::crud('category', 'CategoryCrudController');
 }); // this should be the absolute last line of this file
