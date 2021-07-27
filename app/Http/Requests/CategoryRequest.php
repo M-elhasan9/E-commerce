@@ -14,8 +14,13 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        // only allow updates if the user is logged in
+
+//        $check = backpack_user();
+//        if ($check->cannot("authCheck", backpack_user())) {
+//            abort(404);
+//        }
         return backpack_auth()->check();
+
     }
 
     /**
@@ -26,7 +31,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+             'title' => 'required|min:3|max:255'
         ];
     }
 

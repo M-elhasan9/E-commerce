@@ -30,6 +30,11 @@ class MaterialPolicy
         return $user->id == $material->user_id;
     }
 
+    public function authCheck()
+    {
+        return backpack_auth()->check();
+    }
+
     /**
      * Determine whether the user can view the model.
      *

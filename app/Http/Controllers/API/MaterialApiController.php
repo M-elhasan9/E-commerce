@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,12 +25,10 @@ class MaterialApiController extends Controller
         return $materials;
     }
 
-    public function getCategory($categoryId){
-        $materials = DB::table('material_category')
-            ->where('category_id','=',$categoryId)
-            ->offset(0)->limit(10)->get('material_id');
-
-        return $materials;
+    public function getByCategory($categoryId){
+        //return all data of materials by category id
+        $categories = Category::find($categoryId);
+        return $categories->materials ;
     }
 
 

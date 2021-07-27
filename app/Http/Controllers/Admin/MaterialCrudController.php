@@ -11,7 +11,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Image;
 use Prologue\Alerts\Facades\Alert;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * Class MaterialCrudController
@@ -44,6 +44,7 @@ class MaterialCrudController extends CrudController
         }
 
     }
+
 
     /**
      * Define what happens when the List operation is loaded.
@@ -84,16 +85,22 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'name', 'type' => 'text', 'label' => 'الاسم']);
         CRUD::addColumn(['name' => 'description', 'type' => 'text', 'label' => 'الوصف']);
         CRUD::addColumn(['name' => 'serial', 'type' => 'text', 'label' => 'الرقم التسلسلي']);
-
         CRUD::addColumn([
             'name' => 'image', // The db column name
             'label' => "الصورة", // Table column heading
             'type' => 'image',
         ]);
-
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
         CRUD::addColumn(['name' => 'group', 'type' => 'select', 'label' => 'المجموعة']);
+        CRUD::addColumn([
+            'label' => 'الفئات',
+            'type' => 'select_multiple',
+            'name' => 'categories',
+            'entity' => 'categories',
+            'attribute' => 'title',
+            'model' => 'App\Models\Category',
+        ]);
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
         CRUD::addColumn(['name' => 'user_id', 'type' => 'text', 'label' => 'المسخدم الذي اضاف المادة']);
@@ -143,8 +150,7 @@ class MaterialCrudController extends CrudController
                 return $query->orderBy('name', 'ASC')->get();
             }),]);
 
-
-        CRUD::addField(['name' => 'category', 'label' => "الفئة", 'type' => 'select2_multiple',
+        CRUD::addField(['name' => 'categories', 'label' => "الفئات", 'type' => 'select2_multiple',
             'entity' => 'categories', Category::class => "App\Models\Category",
             'attribute' => 'title', (function ($query) {
                 return $query->orderBy('title', 'ASC')->get();
@@ -184,14 +190,12 @@ class MaterialCrudController extends CrudController
         $this->setupDeleteDefaults();
     }
 
-
     protected function setupShowOperation()
     {
         $user = backpack_user();
         if ($user->cannot("view", $this->crud->getCurrentEntry())) {
             abort(403, "you do not have  the permission to do this!");
         }
-
 
         CRUD::addColumn(['name' => 'name', 'type' => 'text', 'label' => 'الاسم']);
         CRUD::addColumn(['name' => 'description', 'type' => 'text', 'label' => 'الوصف']);
@@ -207,16 +211,20 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
         CRUD::addColumn(['name' => 'group', 'type' => 'select', 'label' => 'المجموعة']);
 
-        //CRUD::addColumn(['name' => 'category', 'type' => 'select2_multiple', 'label' => 'الفئة']);
+        CRUD::addColumn([
+            'label' => 'الفئات',
+            'type' => 'select_multiple',
+            'name' => 'categories',
+            'entity' => 'categories',
+            'attribute' => 'title',
+            'model' => 'App\Models\Category',
+        ]);
 
         CRUD::addColumn(['name' => 'is_visible', 'type' => 'boolean', 'label' => 'مرئية']);
         CRUD::addColumn(['name' => 'is_available', 'type' => 'boolean', 'label' => 'متاحة']);
 
         CRUD::addColumn(['name' => 'user_id', 'type' => 'text', 'label' => 'المسخدم الذي اضاف المادة']);
-
         CRUD::addColumn(['name' => 'not', 'type' => 'text', 'label' => 'ملاحظات']);
-
-
         if ($user->is_admin) {
             $this->crud->addButtonFromView('line', 'show_hide_Material', "toggleVisibility");
         }
@@ -224,7 +232,6 @@ class MaterialCrudController extends CrudController
         if ($user->can("materialToggleAvailability", $this->crud->getCurrentEntry())) {
             $this->crud->addButtonFromView('line', 'is_available', "toggleAvailability");
         }
-
     }
 
     public function materialToggleVisibility($materialId)

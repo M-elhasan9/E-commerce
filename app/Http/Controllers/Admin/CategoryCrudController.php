@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\Group;
+use App\Models\Material;
 
 /**
  * Class CategoryCrudController
@@ -29,6 +32,12 @@ class CategoryCrudController extends CrudController
         CRUD::setModel(\App\Models\Category::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/category');
         CRUD::setEntityNameStrings('فئة', 'الفئات');
+
+        if (!backpack_user()->is_admin) {
+            $this->crud->denyAccess('delete');
+            $this->crud->denyAccess('update');
+            $this->crud->denyAccess('create');
+        }
     }
 
     /**
@@ -41,6 +50,14 @@ class CategoryCrudController extends CrudController
     {
         //CRUD::setFromDb(); // columns
         CRUD::addColumn(['name' => 'title', 'type' => 'text','label'=>'عنوان الفئة']);
+        CRUD::addColumn([
+            'label'     => 'المواد',
+            'type'      => 'select_multiple',
+            'name'      => 'materials',
+            'entity'    => 'materials',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Material',
+        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -61,6 +78,20 @@ class CategoryCrudController extends CrudController
 
         //CRUD::setFromDb(); // fields
         CRUD::addField(['name' => 'title', 'type' => 'text','label'=>'عنوان الفئة']);
+        CRUD::addField([
+            'label'     => "المواد",
+            'type'      => 'select2_multiple',
+            'name'      => 'materials',
+            'entity'    => 'materials',
+            'model'     => "App\Models\Material",
+            'attribute' => 'name',
+            'pivot'     => true,
+            'options'   => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
+        ],);
+
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -83,6 +114,14 @@ class CategoryCrudController extends CrudController
     protected function setupShowOperation(){
 
         CRUD::addColumn(['name' => 'title', 'type' => 'text','label'=>'عنوان الفئة']);
+        CRUD::addColumn([
+            'label'     => 'المواد',
+            'type'      => 'select_multiple',
+            'name'      => 'materials',
+            'entity'    => 'materials',
+            'attribute' => 'name',
+            'model'     => 'App\Models\Material',
+        ]);
 
     }
 }

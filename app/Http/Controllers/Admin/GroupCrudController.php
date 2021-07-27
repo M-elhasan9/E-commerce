@@ -29,6 +29,13 @@ class GroupCrudController extends CrudController
         CRUD::setModel(\App\Models\Group::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/group');
         CRUD::setEntityNameStrings('مجموعة', 'المجموعات');
+
+        if (!backpack_user()->is_admin) {
+            $this->crud->denyAccess('delete');
+            $this->crud->denyAccess('update');
+            $this->crud->denyAccess('create');
+        }
+
     }
 
     /**
@@ -76,4 +83,11 @@ class GroupCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+    protected function setupShowOperation()
+    {
+        CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
+
+    }
+
+
 }
