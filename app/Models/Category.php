@@ -36,9 +36,10 @@ class Category extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    protected function materials()
+
+    public function materials()
     {
-        return $this->belongsToMany(Material::class,'material_category','category_id','material_id','id','id');
+        return $this->belongsToMany(Material::class,'category_material');
     }
 
     /*
