@@ -17,7 +17,7 @@ use \App\Http\Controllers\API\MaterialApiController;
 //TODO:middleware
 Route::get('getbycategory/{categoryId}',[\App\Http\Controllers\API\MaterialApiController::class,'getByCategory']);
 
-Route::apiResource('material', \App\Http\Controllers\API\MaterialApiController::class)->except([
+Route::apiResource('materials', \App\Http\Controllers\API\MaterialApiController::class)->except([
     'create', 'store', 'update', 'destroy'
 ]);
 
