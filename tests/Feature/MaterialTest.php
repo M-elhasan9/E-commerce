@@ -44,4 +44,11 @@ class MaterialTest extends TestCase
 
 
     }
+
+    public function test_Category(){
+
+        $response = $this->get('/api/getbycategory/' . rand(1,5));
+        $response->assertStatus(200);
+
+    }
 }

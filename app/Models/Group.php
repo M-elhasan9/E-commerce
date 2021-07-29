@@ -54,4 +54,9 @@ class Group extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function materials()
+    {
+        $group = $this->hasMany(Material::class);
+        return $group;
+    }
 }

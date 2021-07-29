@@ -27,8 +27,8 @@ class MaterialApiController extends Controller
 
     public function getByCategory($categoryId){
         //return all data of materials by category id
-        $categories = Category::find($categoryId);
-        return $categories->materials ;
+        $categories = Category::find($categoryId)->materials->skip(0)->take(10);
+        return $categories ;
     }
 
 
