@@ -49,7 +49,7 @@ class Material extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class,'category_material');
+        return $this->belongsToMany(Category::class,'material_category','material_id','category_id','id','id');
     }
 
 

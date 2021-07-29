@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\GroupRequest;
+use App\Models\Category;
+use App\Models\Group;
+use App\Models\Material;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -52,6 +55,7 @@ class GroupCrudController extends CrudController
         CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
 
 
+
     }
 
     /**
@@ -64,7 +68,9 @@ class GroupCrudController extends CrudController
     {
         CRUD::setValidation(GroupRequest::class);
 
-        CRUD::setFromDb(); // fields
+        //CRUD::setFromDb(); // fields
+        CRUD::addField(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
+
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -85,7 +91,17 @@ class GroupCrudController extends CrudController
     }
     protected function setupShowOperation()
     {
+
         CRUD::addColumn(['name' => 'name', 'type' => 'text','label'=>'الاسم']);
+        CRUD::addColumn([
+            'label' => 'المواد',
+            'type' => 'select_multiple',
+            'name' => 'materials',
+            'entity' => 'materials',
+            'attribute' => 'name',
+            'model' => 'App\Models\Material',
+        ]);
+
 
     }
 

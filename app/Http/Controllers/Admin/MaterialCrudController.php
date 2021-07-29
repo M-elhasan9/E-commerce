@@ -93,6 +93,7 @@ class MaterialCrudController extends CrudController
         CRUD::addColumn(['name' => 'cost_price', 'type' => 'number', 'label' => 'سعر التكلفة']);
         CRUD::addColumn(['name' => 'selling_price', 'type' => 'number', 'label' => 'سعر البيع']);
         CRUD::addColumn(['name' => 'group', 'type' => 'select', 'label' => 'المجموعة']);
+
         CRUD::addColumn([
             'label' => 'الفئات',
             'type' => 'select_multiple',
