@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Policies\MaterialPolicy;
 
 class CategoryRequest extends FormRequest
 {
@@ -14,13 +15,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
-
-//        $check = backpack_user();
-//        if ($check->cannot("authCheck", backpack_user())) {
-//            abort(404);
-//        }
-        return backpack_auth()->check();
-
+        return MaterialPolicy::authCheck();
     }
 
     /**
@@ -31,7 +26,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-             'title' => 'required|unique:categories|min:3|max:255'
+             'title' => 'required|unique:categories,id|min:3|max:255'
         ];
     }
 

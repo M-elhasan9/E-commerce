@@ -8,6 +8,8 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use App\Models\Group;
 use App\Models\Material;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
 
 /**
  * Class CategoryCrudController
@@ -27,6 +29,7 @@ class CategoryCrudController extends CrudController
      *
      * @return void
      */
+
     public function setup()
     {
         CRUD::setModel(\App\Models\Category::class);
