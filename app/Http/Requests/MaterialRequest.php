@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Policies\MaterialPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MaterialRequest extends FormRequest
@@ -14,8 +15,7 @@ class MaterialRequest extends FormRequest
      */
     public function authorize()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return MaterialPolicy::authCheck();
     }
 
     /**

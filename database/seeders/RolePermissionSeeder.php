@@ -15,12 +15,20 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name'=>'super-admin']);
+        $SuperAdminRole = Role::create(['name'=>'super-admin']);
         Role::create(['name'=>'admin']);
-        $role = Role::create(['name'=>'user']);
+        Role::create(['name'=>'guest']);
 
-        $permission = Permission::create(['name' => 'add material']);
-        $role->givePermissionTo($permission);
+        $createCategoryPermission = Permission::create(['name' => 'create category']);
+        $editCategoryPermission = Permission::create(['name' => 'edit category']);
+        $deleteCategoryPermission = Permission::create(['name' => 'delete category']);
+        $createGroupPermission = Permission::create(['name' => 'create group']);
+        $editGroupPermission = Permission::create(['name' => 'edit group']);
+        $deleteGroupPermission = Permission::create(['name' => 'delete group']);
+
+        $SuperAdminRole->givePermissionTo([$createCategoryPermission,$editCategoryPermission,$deleteCategoryPermission]);
+        $SuperAdminRole->givePermissionTo([$createGroupPermission,$editGroupPermission,$deleteGroupPermission]);
+
 
 
     }

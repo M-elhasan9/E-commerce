@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Policies\MaterialPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GroupRequest extends FormRequest
@@ -14,8 +15,7 @@ class GroupRequest extends FormRequest
      */
     public function authorize()
     {
-        // only allow updates if the user is logged in
-        return backpack_auth()->check();
+        return MaterialPolicy::authCheck();
     }
 
     /**
@@ -26,7 +26,7 @@ class GroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:groups|min:3|max:255'
+            'name' => 'required|unique:groups,id|min:3|max:255'
         ];
     }
 

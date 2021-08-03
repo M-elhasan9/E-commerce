@@ -15,20 +15,28 @@ class MaterialApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $offset=$request->input('offset',0);
+        $limit=$request->input('limit',10);
+
         $materials = DB::table('materials')
             ->where('is_available','=',true)
             ->where('is_visible','=',true)
-            ->offset(0)->limit(10)->get();
+            ->offset($offset)->limit($limit)->get();
 
         return $materials;
     }
 
-    public function getByCategory($categoryId){
+    public function getByCategory($categoryId,Request $request){
+
         //return all data of materials by category id
-        $categories = Category::find($categoryId)->materials->skip(0)->take(10);
-        return $categories ;
+        $offset=$request->input('offset',0);
+        $limit=$request->input('limit',10);
+        $materials=Material::query()->whereHas('categories',function ($query) use ($categoryId) {
+            $query->where('id',$categoryId);
+        })->offset($offset)->limit($limit)->get();
+        return $materials ;
     }
 
 
